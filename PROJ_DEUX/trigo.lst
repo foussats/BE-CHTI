@@ -1,0 +1,86 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 thumb
+    2 00000000                 area             moncode, code, readonly
+    3 00000000                 extern           TabSin
+    4 00000000                 extern           TabCos
+    5 00000000                 export           somme
+    6 00000000         ;
+    7 00000000         somme   proc
+    8 00000000 4601            mov              r1,r0
+    9 00000002         ;on prend le cos dans le tab
+   10 00000002 4A06            ldr              r2, =TabCos
+   11 00000004 F932 0010       ldrsh            r0, [r2,r0, lsl #1]
+   12 00000008         ; on le met au carré
+   13 00000008 FB00 F000       mul              r0,r0,r0
+   14 0000000C         ; dans une autre var on va chercher le sin
+   15 0000000C 4B04            ldr              r3, =TabSin
+   16 0000000E F933 1011       ldrsh            r1, [r3,r1, lsl #1]
+   17 00000012         ; on le met au carre
+   18 00000012 FB01 F101       mul              r1,r1,r1
+   19 00000016         ; on add le cos et le sin
+   20 00000016 4408            add              r0,r1
+   21 00000018 4770            bx               lr
+   22 0000001A         
+   23 0000001A                 endp
+   24 0000001A                 end
+              00 00 00000000 
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\obj\trigo.d -o.\obj\trigo.o -I.\RTE\_reel -IC:\Users\leoni\AppDa
+ta\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include -IC:\Users\leoni\AppData\
+Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include --predefine="__EVAL SET
+A 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 529" -
+-predefine="_RTE_ SETA 1" --predefine="STM32F10X_MD SETA 1" --list=trigo.lst tr
+igo.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+moncode 00000000
+
+Symbol: moncode
+   Definitions
+      At line 2 in file trigo.s
+   Uses
+      None
+Comment: moncode unused
+somme 00000000
+
+Symbol: somme
+   Definitions
+      At line 7 in file trigo.s
+   Uses
+      At line 5 in file trigo.s
+Comment: somme used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+TabCos 00000000
+
+Symbol: TabCos
+   Definitions
+      At line 4 in file trigo.s
+   Uses
+      At line 10 in file trigo.s
+Comment: TabCos used once
+TabSin 00000000
+
+Symbol: TabSin
+   Definitions
+      At line 3 in file trigo.s
+   Uses
+      At line 15 in file trigo.s
+Comment: TabSin used once
+2 symbols
+341 symbols in table
