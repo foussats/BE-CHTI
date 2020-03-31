@@ -1,8 +1,8 @@
 #include "gassp72.h"
 
 void timer_callback(void);
-int var = 0;
-int Periode_en_Tck = 1000;
+
+int Periode_en_Tck = 100;
 
 
 int main(void){
