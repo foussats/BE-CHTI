@@ -1,0 +1,78 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 thumb
+    2 00000000                 area             moncode, code, readonly
+    3 00000000                 export           reel_imag
+    4 00000000         ;
+    5 00000000         reel_imag
+                               proc
+    6 00000000         ;somme de i allant de 0 a N-1, de xi * cos(ik2pi/N)
+    7 00000000         ;3 args entree: valeur de k, valeur deb tab cos/sin, val
+                        deb tab signal
+    8 00000000         ; r0 contient signal, r1 contient k, r2 contient tab cos
+                        sin
+    9 00000000 E92D 0120       push             {r5,r8}
+   10 00000004         ; r12 correspond a l'iterateur boucle for 
+   11 00000004         ; r3 contient res
+   12 00000004 F04F 0C00       mov              r12,#0
+   13 00000008 F04F 0800       mov              r8, #0
+   14 0000000C         boucle
+   15 0000000C FB0C F301       mul              r3,r12,r1
+   16 00000010         ; i*k dans r3
+   17 00000010 F003 033F       and              r3, #63
+   18 00000014         ;modulo avec N dans r3 (-> index du cos)
+   19 00000014 F932 3013       ldrsh            r3, [r2,r3, lsl #1]
+   20 00000018 F930 501C       ldrsh            r5, [r0, r12, lsl #1]
+   21 0000001C FB03 F305       mul              r3, r5
+   22 00000020 4498            add              r8, r3
+   23 00000022 F10C 0C01       add              r12,#1
+   24 00000026 F1BC 0F40       cmp              r12, #64
+   25 0000002A DBEF            blt              boucle
+   26 0000002C 4640            mov              r0, r8
+   27 0000002E E8BD 0120       pop              {r8,r5}
+   28 00000032 4770            bx               lr
+   29 00000034                 endp
+   30 00000034         
+   31 00000034                 end
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\obj\dft.d -o.\obj\dft.o -I.\RTE\_reel -IC:\Users\momof\AppData\L
+ocal\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include -IC:\Users\momof\AppData\Loca
+l\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include --predefine="__EVAL SETA 1"
+ --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 529" --pre
+define="_RTE_ SETA 1" --predefine="STM32F10X_MD SETA 1" --list=dft.lst dft.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+boucle 0000000C
+
+Symbol: boucle
+   Definitions
+      At line 14 in file dft.s
+   Uses
+      At line 25 in file dft.s
+Comment: boucle used once
+moncode 00000000
+
+Symbol: moncode
+   Definitions
+      At line 2 in file dft.s
+   Uses
+      None
+Comment: moncode unused
+reel_imag 00000000
+
+Symbol: reel_imag
+   Definitions
+      At line 5 in file dft.s
+   Uses
+      At line 3 in file dft.s
+Comment: reel_imag used once
+3 symbols
+338 symbols in table

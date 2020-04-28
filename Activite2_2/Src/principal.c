@@ -5,10 +5,14 @@ void timer_callback(void);
 int var = 0;
 int Periode_en_Tck = 100;
 
+
 extern int TabSin;
 extern int TabCos;
 extern int dft(short *, int);
 extern short TabSigMine;
+extern short TabSig;
+extern short TabSig1;
+extern short TabSig2;
 int somme(int);
 
 
@@ -28,7 +32,7 @@ int somme(int);
 			}*/
 			int tab_res[64];
 			for (int i=0;i<64;i++){
-				tab_res[i]=dft(&TabSigMine,i);
+				tab_res[i]=dft(&TabSig2,i);
 			}
 			
 			// activation de la PLL qui multiplie la fréquence du quartz par 9

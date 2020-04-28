@@ -1,0 +1,111 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 thumb
+    2 00000000                 area             moncode, code,READONLY
+    3 00000000                 extern           TabSig2
+    4 00000000                 extern           TabSin
+    5 00000000                 extern           TabCos
+    6 00000000                 extern           reel_imag
+    7 00000000                 export           dft
+    8 00000000         
+    9 00000000         dft     proc
+   10 00000000         ;adr de base signal et valeur de k
+   11 00000000         ;signal dans r0 et k dans r1
+   12 00000000 B5D0            push             {lr,r4,r6,r7}
+   13 00000002         
+   14 00000002 4A07            ldr              r2, =TabCos
+   15 00000004 4604            mov              r4,r0
+   16 00000006 F7FF FFFE       bl               reel_imag
+   17 0000000A         ; res du reel dans r6 et mise au carré
+   18 0000000A FBC0 6700       smlal            r6,r7,r0,r0
+   19 0000000E         
+   20 0000000E 4A05            ldr              r2, =TabSin
+   21 00000010 4620            mov              r0,r4
+   22 00000012 F7FF FFFE       bl               reel_imag
+   23 00000016         ;res de la partie imaginaire dans r0 et mise au carré
+   24 00000016 FBC0 6700       smlal            r6,r7,r0,r0
+   25 0000001A         
+   26 0000001A 4638            mov              r0, r7
+   27 0000001C         
+   28 0000001C BDD0            pop{r7,r6,r4,pc}
+   29 0000001E 4770            bx               lr
+   30 00000020                 endp
+   31 00000020         
+   32 00000020                 end
+              00000000 
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\obj\dftt.d -o.\obj\dftt.o -I.\RTE\_reel -IC:\Users\momof\AppData
+\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include -IC:\Users\momof\AppData\Lo
+cal\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include --predefine="__EVAL SETA 
+1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 529" --p
+redefine="_RTE_ SETA 1" --predefine="STM32F10X_MD SETA 1" --list=dftt.lst dftt.
+s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+dft 00000000
+
+Symbol: dft
+   Definitions
+      At line 9 in file dftt.s
+   Uses
+      At line 7 in file dftt.s
+Comment: dft used once
+moncode 00000000
+
+Symbol: moncode
+   Definitions
+      At line 2 in file dftt.s
+   Uses
+      None
+Comment: moncode unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+TabCos 00000000
+
+Symbol: TabCos
+   Definitions
+      At line 5 in file dftt.s
+   Uses
+      At line 14 in file dftt.s
+Comment: TabCos used once
+TabSig2 00000000
+
+Symbol: TabSig2
+   Definitions
+      At line 3 in file dftt.s
+   Uses
+      None
+Comment: TabSig2 unused
+TabSin 00000000
+
+Symbol: TabSin
+   Definitions
+      At line 4 in file dftt.s
+   Uses
+      At line 20 in file dftt.s
+Comment: TabSin used once
+reel_imag 00000000
+
+Symbol: reel_imag
+   Definitions
+      At line 6 in file dftt.s
+   Uses
+      At line 16 in file dftt.s
+      At line 22 in file dftt.s
+
+4 symbols
+343 symbols in table
